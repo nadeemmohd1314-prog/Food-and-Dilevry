@@ -1,0 +1,114 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Customer and partner profile data",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "phoneNumber": { "type": "string" },
+        "displayName": { "type": "string" },
+        "city": { "type": "string" },
+        "savedAddresses": { "type": "array" },
+        "createdAt": { "type": "string" },
+        "role": { "type": "string", "enum": ["customer", "restaurant_partner", "delivery_partner", "admin"] }
+      },
+      "required": ["id", "phoneNumber", "createdAt"]
+    },
+    "AdminRecord": {
+      "title": "AdminRecord",
+      "description": "Super admin and operations team records",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "role": { "type": "string", "enum": ["super_admin", "operations_manager", "finance_support"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "Restaurant": {
+      "title": "Restaurant",
+      "description": "Restaurant profile and business details",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "city": { "type": "string" },
+        "locality": { "type": "string" },
+        "address": { "type": "string" },
+        "phone": { "type": "string" },
+        "cuisine": { "type": "array" },
+        "rating": { "type": "number" },
+        "minOrderAmount": { "type": "number" },
+        "commissionRate": { "type": "number" },
+        "status": { "type": "string", "enum": ["approved", "pending", "suspended"] },
+        "isOpen": { "type": "boolean" },
+        "pureVeg": { "type": "boolean" },
+        "imageUrl": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "name", "city", "address", "phone", "status"]
+    },
+    "MenuItem": {
+      "title": "MenuItem",
+      "description": "Dishes and food items in restaurant menus",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "restaurantId": { "type": "string" },
+        "name": { "type": "string" },
+        "category": { "type": "string" },
+        "price": { "type": "number" },
+        "discountPrice": { "type": "number" },
+        "dietary": { "type": "string", "enum": ["veg", "non-veg", "egg", "vegan"] },
+        "imageUrl": { "type": "string" },
+        "isAvailable": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "restaurantId", "name", "category", "price", "isAvailable"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Customer food order with tracking and items",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "orderNumber": { "type": "string" },
+        "restaurantId": { "type": "string" },
+        "customerId": { "type": "string" },
+        "subtotal": { "type": "number" },
+        "totalAmount": { "type": "number" },
+        "paymentMethod": { "type": "string", "enum": ["cod", "upi", "card", "netbanking"] },
+        "paymentStatus": { "type": "string", "enum": ["pending", "paid", "failed", "refunded"] },
+        "orderStatus": { "type": "string", "enum": ["pending", "accepted", "preparing", "ready_for_pickup", "out_for_delivery", "delivered", "cancelled"] },
+        "deliveryOtp": { "type": "string" },
+        "assignedDriverId": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "orderNumber", "restaurantId", "totalAmount", "orderStatus", "paymentMethod"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Collection of customer user profiles"
+    },
+    "/admins/{adminId}": {
+      "schema": "AdminRecord",
+      "description": "Collection of authorized admin team members"
+    },
+    "/restaurants/{restaurantId}": {
+      "schema": "Restaurant",
+      "description": "Collection of UP restaurants"
+    },
+    "/menuItems/{itemId}": {
+      "schema": "MenuItem",
+      "description": "Collection of menu items for all restaurants"
+    },
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "Customer food orders and status records"
+    }
+  }
+}

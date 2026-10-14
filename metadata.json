@@ -1,0 +1,6 @@
+{
+  "name": "Food & Delivery - Multi-Restaurant Platform & Admin Dashboard",
+  "description": "Comprehensive food delivery customer application and secure role-based Admin Dashboard for restaurant listings, menu management, live order dispatch, driver assignments, coupons, finance, and payment configuration.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
